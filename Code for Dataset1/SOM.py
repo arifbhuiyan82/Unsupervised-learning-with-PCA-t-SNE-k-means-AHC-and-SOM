@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from minisom import MiniSom
+import matplotlib.pyplot as plt
 
 # Load the 'A3-data.txt' dataset
 filename = 'A3-data.txt'
@@ -42,13 +43,34 @@ for x in X:
 winners_df = pd.DataFrame(winners, columns=['Winner_X', 'Winner_Y'])
 result_df = pd.concat([df, winners_df], axis=1)
 
-# Display the U-Matrix, Component Planes, and the updated DataFrame
-print("U-Matrix:")
-print(umatrix)
-print("\nComponent Planes:")
-for i, var_name in enumerate(df.columns[:-1]):
-    print(f'Component Plane for {var_name}:')
-    print(component_planes[i])
+# Display the U-Matrix
+plt.figure(figsize=(8, 8))
+plt.title("U-Matrix")
+plt.pcolor(umatrix, cmap='viridis_r')
+plt.colorbar()
 
+# Display Component Planes
+n_rows, n_cols = int(np.ceil(n_variables / 2)), 2
+fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 12))
+for i, var_name in enumerate(df.columns[:-1]):
+    row = i // n_cols
+    col = i % n_cols
+    ax = axes[row, col]
+    ax.set_title(f'Component Plane for {var_name}')
+    ax.pcolor(component_planes[i].T, cmap='coolwarm')
+    ax.axis('off')
+
+# Remove empty subplots if there are any
+if n_variables % 2 != 0:
+    fig.delaxes(axes[n_rows - 1, n_cols - 1])
+
+plt.tight_layout()
+plt.suptitle("Component Planes", fontsize=16)
+plt.subplots_adjust(top=0.9)
+
+# Show plots
+plt.show()
+
+# Display the updated DataFrame with Winning Neurons
 print("\nUpdated DataFrame with Winning Neurons:")
 print(result_df)
