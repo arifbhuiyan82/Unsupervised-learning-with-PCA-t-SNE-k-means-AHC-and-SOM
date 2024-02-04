@@ -22,9 +22,6 @@ x = df.loc[:, features].values
 # Separating out the target (class)
 y = df.loc[:, target].values
 
-# Standardizing the features using StandardScaler
-x = StandardScaler().fit_transform(x)
-
 # Record the start time for performance measurement
 time_start = time.time()
 

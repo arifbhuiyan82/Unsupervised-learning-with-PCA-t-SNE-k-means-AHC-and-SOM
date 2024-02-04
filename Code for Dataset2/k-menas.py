@@ -32,18 +32,6 @@ X_norm = StandardScaler().fit_transform(X)
 
 print(X_norm)
 
-# Elbow curve to determine optimal value of k.
-nc = range(1, 30)
-kmeans = [KMeans(n_clusters=i) for i in nc]
-kmeans
-score = [kmeans[i].fit(X_norm).score(X_norm) for i in range(len(kmeans))]
-score
-plt.plot(nc,score)
-plt.xlabel('Number of Clusters (k)')
-plt.ylabel('Score')
-plt.title('Elbow Curve')
-plt.show()
-
 n_classes =  np.unique(y).size
 
 # Application of k-means with k = 6

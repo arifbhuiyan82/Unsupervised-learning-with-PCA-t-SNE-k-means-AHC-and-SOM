@@ -18,9 +18,6 @@ x = df.loc[:, features].values
 # Separating out the target (class)
 y = df.loc[:, target].values
 
-# Standardize the features
-x = StandardScaler().fit_transform(x)
-
 # Perform PCA with 2 principal components
 pca = PCA(n_components=2)
 principal_components = pca.fit_transform(x)
